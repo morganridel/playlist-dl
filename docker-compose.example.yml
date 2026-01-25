@@ -1,0 +1,15 @@
+services:
+  playlist-dl:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      PLAYLIST_DL_OUTPUT_DIR: /outputs
+      # Optional:
+      # YTDLP_COOKIES: /cookies/cookies.txt
+    volumes:
+      # Map the container output folder to a host path you control:
+      - ./data/playlist-dl-outputs:/outputs
+      # Optional cookies mount:
+      # - ./data/cookies:/cookies:ro
+    restart: unless-stopped

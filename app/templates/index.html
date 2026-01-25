@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>playlist-dl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/vendor/pico.min.css"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <header class="hero-header">
+          <h1>playlist-dl</h1>
+          <p class="sub">Turn a single YouTube video into a chapter-split album.</p>
+        </header>
+
+        <form id="jobForm">
+          <label>
+            YouTube URL
+            <input
+              id="url"
+              name="url"
+              type="url"
+              placeholder="https://www.youtube.com/watch?v=..."
+              required
+              autocomplete="off"
+            />
+          </label>
+
+          <fieldset class="grid">
+            <label>
+              Album (optional)
+              <input name="album" type="text" placeholder="Default: video title" />
+            </label>
+            <label>
+              Artist (optional)
+              <input name="artist" type="text" placeholder="Default: uploader" />
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Output</legend>
+            <label>
+              <input type="radio" name="mode" value="store" checked />
+              Save on the server
+            </label>
+            <label>
+              <input type="radio" name="mode" value="download" />
+              Download ZIP
+            </label>
+          </fieldset>
+
+          <details>
+            <summary>Manual timestamps (optional)</summary>
+            <p class="hint">
+              Used when the video has no chapters, or to override chapters.
+              One per line: <code>MM:SS | Title</code>
+            </p>
+            <textarea
+              name="manual_timestamps"
+              rows="8"
+              placeholder="00:00 | Track One&#10;03:42 | Track Two&#10;07:10 | Track Three"
+            ></textarea>
+          </details>
+
+          <button id="submitBtn" type="submit">Make album</button>
+        </form>
+
+        <div id="status" class="status" hidden>
+          <progress id="progress" value="0" max="1"></progress>
+          <div class="status-row">
+            <strong id="statusText">Queued</strong>
+            <span id="statusPct">0%</span>
+          </div>
+          <div id="result" class="result"></div>
+          <pre id="log" class="log" aria-live="polite"></pre>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
