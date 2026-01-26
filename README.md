@@ -2,6 +2,12 @@
 
 Web UI for turning a single long YouTube video into an "album" by splitting audio into tracks from chapters (or manual timestamps).
 
+![](demo.png)
+
+Example output (Navidrome player):
+
+![alt text](navidrome.png)
+
 ## Prereqs
 
 - `ffmpeg` installed and available on `PATH` (or set `FFMPEG_BIN`)
