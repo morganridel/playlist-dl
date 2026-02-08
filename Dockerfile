@@ -1,3 +1,4 @@
+FROM node:20-bookworm-slim AS node_runtime
 FROM python:3.11-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -6,6 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update \
   && apt-get install -y --no-install-recommends ffmpeg ca-certificates \
   && rm -rf /var/lib/apt/lists/*
+
+COPY --from=node_runtime /usr/local/bin/node /usr/local/bin/node
 
 WORKDIR /app
 

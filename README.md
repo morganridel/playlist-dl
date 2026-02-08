@@ -11,6 +11,8 @@ Example output (Navidrome player):
 ## Prereqs
 
 - `ffmpeg` installed and available on `PATH` (or set `FFMPEG_BIN`)
+- Node.js 20+ installed and available on `PATH` (or set `YTDLP_NODE_PATH`)
+- `yt-dlp-ejs` installed (included in `requirements.txt`)
 - Python 3.9+
 
 ## Run
@@ -23,6 +25,8 @@ pip install -r requirements.txt
 export PLAYLIST_DL_OUTPUT_DIR="$PWD/outputs"
 # optional:
 # export FFMPEG_BIN="/opt/homebrew/bin/ffmpeg"
+# export YTDLP_NODE_PATH="/opt/homebrew/bin/node"
+# export YTDLP_REMOTE_COMPONENTS="ejs:github"
 
 uvicorn app.main:app --reload
 ```

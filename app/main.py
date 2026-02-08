@@ -352,6 +352,15 @@ def _ytdlp_worker(
     try:
         wd = Path(work_dir)
         wd.mkdir(parents=True, exist_ok=True)
+        node_path = (os.environ.get("YTDLP_NODE_PATH") or "").strip()
+        js_runtimes: Dict[str, Dict[str, str]] = {"node": {}}
+        if node_path:
+            js_runtimes["node"]["path"] = node_path
+        remote_components = [
+            c.strip()
+            for c in (os.environ.get("YTDLP_REMOTE_COMPONENTS") or "ejs:github").split(",")
+            if c.strip()
+        ]
         ydl_opts: Dict[str, Any] = {
             "outtmpl": str(wd / "source.%(ext)s"),
             "format": "bestaudio/best",
@@ -360,6 +369,8 @@ def _ytdlp_worker(
             "no_warnings": True,
             "writethumbnail": True,
             "writeinfojson": True,
+            "js_runtimes": js_runtimes,
+            "remote_components": remote_components,
             "progress_hooks": [hook],
             "logger": _Logger(),
             # Fail faster in common stuck-network cases.

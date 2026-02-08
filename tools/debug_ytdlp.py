@@ -55,6 +55,16 @@ def main() -> int:
     out_dir = Path(args.out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    node_path = (os.environ.get("YTDLP_NODE_PATH") or "").strip()
+    js_runtimes: Dict[str, Dict[str, str]] = {"node": {}}
+    if node_path:
+        js_runtimes["node"]["path"] = node_path
+    remote_components = [
+        c.strip()
+        for c in (os.environ.get("YTDLP_REMOTE_COMPONENTS") or "ejs:github").split(",")
+        if c.strip()
+    ]
+
     last_line_ts = 0.0
 
     def hook(d: Dict[str, Any]) -> None:
@@ -87,6 +97,8 @@ def main() -> int:
         "verbose": True,
         "writethumbnail": True,
         "writeinfojson": True,
+        "js_runtimes": js_runtimes,
+        "remote_components": remote_components,
         "progress_hooks": [hook],
         "socket_timeout": 20,
         "retries": 3,
@@ -108,4 +120,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
